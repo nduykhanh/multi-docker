@@ -5,20 +5,20 @@ services:
   - docker
 
 before_install:
-  - docker build -t khanh/react-test -f ./client/Dockerfile.dev ./client
+  - docker build -t duykhanh/react-test -f ./client/Dockerfile.dev ./client
 
 script:
-  - docker run -e CI=true khanh/react-test npm test
+  - docker run -e CI=true duykhanh/react-test npm test
 
 after_success:
-  - docker build -t khanh/multi-client ./client
-  - docker build -t khanh/multi-nginx ./nginx
-  - docker build -t khanh/multi-server ./server
-  - docker build -t khanh/multi-worker ./worker
+  - docker build -t duykhanh/multi-client ./client
+  - docker build -t duykhanh/multi-nginx ./nginx
+  - docker build -t duykhanh/multi-server ./server
+  - docker build -t duykhanh/multi-worker ./worker
   # Log in to the docker CLI
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
   # Take those images and push them to docker hub
-  - docker push khanh/multi-client
-  - docker push khanh/multi-nginx
-  - docker push khanh/multi-server
-  - docker push khanh/multi-worker
+  - docker push duykhanh/multi-client
+  - docker push duykhanh/multi-nginx
+  - docker push duykhanh/multi-server
+  - docker push duykhanh/multi-worker
