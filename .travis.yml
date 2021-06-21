@@ -9,3 +9,16 @@ before_install:
 
 script:
   - docker run -e CI=true khanh/react-test npm test
+
+after_success:
+  - docker build -t khanh/multi-client ./client
+  - docker build -t khanh/multi-nginx ./nginx
+  - docker build -t khanh/multi-server ./server
+  - docker build -t khanh/multi-worker ./worker
+  # Log in to the docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  # Take those images and push them to docker hub
+  - docker push khanh/multi-client
+  - docker push khanh/multi-nginx
+  - docker push khanh/multi-server
+  - docker push khanh/multi-worker
